@@ -12,6 +12,7 @@ def add_book(title, author, year):
 def list_books():
     with open('books.csv', mode='r') as file:
         reader = csv.reader(file)
+        next(reader)
         for row in reader:
             print(f'Title: {row[0]}, Author: {row[1]}, Year: {row[2]}')
 
@@ -20,6 +21,7 @@ def list_books():
 def search_book(title):
     with open('books.csv', mode='r') as file:
         reader = csv.reader(file)
+        next(reader)
         for row in reader:
             if row[0].lower() == title.lower():
                 print(f'Found: Title: {row[0]}, Author: {row[1]}, Year: {row[2]}')
