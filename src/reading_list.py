@@ -1,3 +1,9 @@
+# Nolan Makinen
+# Princess Okerulu
+# reading_list.py
+# 2025-02-04
+# A program that can store, delete and search information about a reading list.
+
 import csv
 import os
 
@@ -19,6 +25,20 @@ def add_book(title, author, year):
 
     # Check if file exists; if not, write header
     file_exists = os.path.isfile(CSV_FILENAME)
+
+    # Check for duplicate book before adding
+    if file_exists:
+        try:
+            with open(CSV_FILENAME, mode='r', newline='') as file:
+                reader = csv.reader(file)
+                next(reader, None)  # Skip header
+                for row in reader:
+                    if row and row[0].lower() == title.lower() and row[1].lower() == author.lower():
+                        print("Error: This book already exists in the reading list.")
+                        return
+        except OSError as e:
+            print(f"Error: Could not read from file '{CSV_FILENAME}'.\n{e}")
+            return
 
     try:
         with open(CSV_FILENAME, mode='a', newline='') as file:
